@@ -1,5 +1,3 @@
-import {in_text, Vec2d} from "wasm-thjread";
-
 import text from "./text.js";
 
 /*function intersect(lineA, lineB) {
@@ -131,19 +129,21 @@ function colFromGen(gen, hit) {
 
 function drawPatch(x, y, w, h, gen) {
     const scale = width/256;
-    const p = new Vec2d(x+w/2, y+h/2);
-    const res = in_text(p);
-    const hit = res.get_hit();
-    const minDist = res.get_dist();
+    const res = inText([x+w/2, y+h/2]);
     const col_delta = Math.pow(0.5, gen/4+0.75);
-    ctx.fillStyle = colFromGen(gen, hit);
+    ctx.fillStyle = colFromGen(gen, res.hit);
     ctx.strokeStyle = "rgb(128,128,128)"
     ctx.lineWidth = 0.5;
     ctx.beginPath();
     ctx.rect(x*scale, y*scale, w*scale, h*scale);
     ctx.fill();
     ctx.stroke();
-    if (minDist*minDist < (w*w + h*h)/4) {
+    /*ctx.beginPath();
+    ctx.strokeStyle = "rgba(255, 0, 0, 0.3)";
+    ctx.moveTo((x+w/2)*scale, (y+w/2)*scale);
+    ctx.lineTo(res.nearest[0]*scale, res.nearest[1]*scale);
+    ctx.stroke();*/ // TODO put these on a second layer, clear each generation
+    if (res.minDistance * res.minDistance < (w*w + h*h)/4) {
         patches.push([x, y, w/2, h/2, gen+1]);
         patches.push([x, y+h/2, w/2, h/2, gen+1]);
         patches.push([x+w/2, y, w/2, h/2, gen+1]);
@@ -192,7 +192,7 @@ function draw(time) {
     lastTime = time;
 }
 
-function init() {
+window.onload = function () {
     canvas = document.getElementById("thjread-canvas");
     width = window.innerWidth;
     height = window.innerHeight;
@@ -222,10 +222,5 @@ function init() {
     ctx.fillStyle = "rgb(127,127,127)"
     ctx.fillRect(0, 0, width, height);
     window.requestAnimationFrame(draw)
-}
 
-if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", init);
-} else {
-    init();
 }

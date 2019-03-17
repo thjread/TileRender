@@ -2,10 +2,13 @@ extern crate cfg_if;
 extern crate wasm_bindgen;
 
 mod utils;
+mod text;
+use text::TEXT_RAW;
 
 use cfg_if::cfg_if;
 use wasm_bindgen::prelude::*;
 use std::ops;
+use std::cell::RefCell;
 
 cfg_if! {
     // When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
@@ -22,13 +25,20 @@ extern "C" {
     fn alert(s: &str);
 }
 
+#[wasm_bindgen]
 #[derive(Debug, PartialEq, Clone, Copy)]
 pub struct Vec2d {
     x: f32,
     y: f32,
 }
 
+#[wasm_bindgen]
 impl Vec2d {
+    #[wasm_bindgen(constructor)]
+    pub fn new(x: f32, y: f32) -> Vec2d {
+        Vec2d { x, y }
+    }
+
     fn length(self) -> f32 {
         (self.x*self.x+self.y*self.y).sqrt()
     }
@@ -87,7 +97,7 @@ impl ops::Div<f32> for Vec2d {
 }
 
 #[derive(Debug, Clone, Copy)]
-struct Line {
+pub struct Line {
     from: Vec2d,
     to: Vec2d,
 }
@@ -104,8 +114,6 @@ pub struct LineMeta {
     dir: Vec2d,// unit vector in direction from -> to
     normal: Vec2d,// unit vector perpendicular to dir
 }
-
-static TEXT: &[Line] = &[Line{from: Vec2d{x: 0f32, y: 0f32}, to: Vec2d{x:1f32, y: 0f32}}];
 
 impl From<Line> for LineMeta {
     fn from(line: Line) -> LineMeta {
@@ -146,30 +154,51 @@ fn min_distance_to_segment(p: Vec2d, s: LineMeta) -> f32 {
     }
 }
 
+thread_local!(static TEXT: RefCell<Vec<LineMeta>> = RefCell::new(
+    TEXT_RAW.into_iter().filter(|l| (*l).length() > 0.0).map(|l| LineMeta::from(*l)).collect()
+    ));
+
 #[wasm_bindgen]
-pub fn process_text() -> Vec<LineMeta> {
-    TEXT.into_iter().filter(|l| (*l).length() > 0.0).map(|l| LineMeta::from(*l)).collect()
+#[allow(dead_code)]
+pub struct InTextResult {
+    hit: bool,
+    dist: f32,
 }
 
 #[wasm_bindgen]
-pub fn in_text(p: Vec2d, text: &Vec<LineMeta>) -> (bool, f32) {
-    assert!(text.len() > 0);
+impl InTextResult {
+    pub fn get_hit(&self) -> bool {
+        self.hit
+    }
 
+    pub fn get_dist(&self) -> f32 {
+        self.dist
+    }
+}
+
+#[wasm_bindgen]
+pub fn in_text(p: Vec2d) -> InTextResult {
     let ray: LineMeta = LineMeta::from(Line { from: p, to: p + Vec2d { x: 1.0, y: 0.0 } });
     let mut hits = 0;
     let mut min_dist = None;
-    for &s in text {
-        if ray_hits_segment(ray, s) {
-            hits += 1;
+    TEXT.with(|ref t| {
+        let text: &Vec<LineMeta> = &t.borrow();
+        for &s in text {
+            if ray_hits_segment(ray, s) {
+                hits += 1;
+            }
+            let dist = min_distance_to_segment(p, s);
+            min_dist = match min_dist {
+                None => Some(dist),
+                Some(d) => Some(d.min(dist))
+            }
         }
-        let dist = min_distance_to_segment(p, s);
-        min_dist = match min_dist {
-            None => Some(dist),
-            Some(d) => Some(d.min(dist))
+        let in_interior = hits % 2 == 1;
+        InTextResult {
+            hit: in_interior,
+            dist: min_dist.unwrap()
         }
-    }
-    let in_interior = hits % 2 == 1;
-    (in_interior, min_dist.unwrap())
+    })
 }
 
 #[wasm_bindgen]
