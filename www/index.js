@@ -10,7 +10,7 @@ let patches = [[0, 0, 128, 128, 1],
                [128, 0, 128, 128, 1]];
 let patchIndex = 0;
 
-let MAX_GEN = 11;
+const MAX_GEN = 10;
 
 function colFromGen(gen, hit) {
     const col_delta = Math.pow(0.5, gen/5+0.8);
@@ -95,13 +95,12 @@ function init() {
     } else {
         width = height*2;
     }
-    canvas.width = width;
-    canvas.height = height;
-    if (width <= 600) {
-        MAX_GEN = 10;
-    }
+    let dpr = window.devicePixelRatio || 1;
+    canvas.width = width*dpr;
+    canvas.height = height*dpr;
 
     ctx = canvas.getContext("2d", {alpha: false});
+    ctx.scale(dpr, dpr);
     ctx.fillStyle = "rgb(127,127,127)"
     ctx.fillRect(0, 0, width, height);
     window.requestAnimationFrame(draw)
