@@ -63,10 +63,4 @@ module.exports = {
     resolve: {
         extensions: [".js", ".wasm"],
     },
-    optimization: {
-        runtimeChunk: "single",
-        splitChunks: {
-            chunks: "all",
-        },
-    },
 };

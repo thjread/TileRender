@@ -17,32 +17,31 @@ body {
     transition: background-color 1s linear;
     min-height: 100%;
     display: flex;
-    align-items: center;
     justify-content: center;
+    flex-direction: column;
+    align-items: center;
 }
 
 .canvas-container {
-    position: fixed;
-    z-index: -1;
     display: flex;
     justify-content: center;
-    align-items: center;
-    min-height: 100%;
+    height: 100%;
     width: 100%;
+    align-items: flex-start;
 }
 
 #thjread-canvas {
+    max-width: 100%;
+    max-height: 100%;
     border: 0.5px solid rgb(128,128,128);
 }
 
 ul {
-    position: relative;
-    top: 35vh;
-    padding: none;
-    margin: 0;
+    padding: 0;
+    margin-top: 2rem;
     list-style: none;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     font-variant: small-caps;
     font-family: 'fira_sanslight', sans-serif;
     opacity: 0;
@@ -50,6 +49,8 @@ ul {
     animation-fill-mode: forwards;
     will-change: opacity;
     color: white;
+    justify-content: flex-start;
+    align-items: center;
 }
 @keyframes fade-in {
     from {
@@ -61,8 +62,18 @@ ul {
 }
 
 li {
-    margin: 1rem;
+    margin: 0.2rem;
+    padding: 0;
+    display: block;
     font-size: 2rem;
+    text-align: center;
+}
+
+.bar {
+    color: transparent;
+    line-height: 0;
+    border-bottom: 0.1rem solid white;
+    width: 8rem;
 }
 
 a {
@@ -71,4 +82,34 @@ a {
 }
 a:hover {
     color: #ddd;
+}
+
+@media only screen and (min-width: 600px) {
+    .canvas-container {
+        position: fixed;
+        z-index: -1;
+        align-items: center;
+    }
+
+    #thjread-canvas {
+        margin: 0;
+    }
+
+    ul {
+        position: relative;
+        top: 35vh;
+        flex-direction: row;
+    }
+
+    li {
+        text-align: initial;
+        margin: 1rem;
+    }
+
+    .bar {
+        line-height: initial;
+        border-bottom: none;
+        width: initial;
+        color: inherit;
+    }
 }

@@ -10,7 +10,7 @@ let patches = [[0, 0, 128, 128, 1],
                [128, 0, 128, 128, 1]];
 let patchIndex = 0;
 
-const MAX_GEN = 11;
+let MAX_GEN = 11;
 
 function colFromGen(gen, hit) {
     const col_delta = Math.pow(0.5, gen/5+0.8);
@@ -90,29 +90,18 @@ function init() {
     canvas = document.getElementById("thjread-canvas");
     width = window.innerWidth;
     height = window.innerHeight;
-    if (height <= width) {
-        if (height > width/2) {
-            height = width/2;
-        } else {
-            width = height*2;
-        }
-        canvas.width = width;
-        canvas.height = height;
-        ctx = canvas.getContext("2d", {alpha: false});
+    if (height > width/2) {
+        height = width/2;
     } else {
-        width = window.innerHeight;
-        height = window.innerWidth;
-        if (height > width/2) {
-            height = width/2;
-        } else {
-            width = height*2;
-        }
-        canvas.width = height;
-        canvas.height = width;
-        ctx = canvas.getContext("2d", {alpha: false});
-        ctx.rotate(3.1415926/2);
-        ctx.translate(0, -height);
+        width = height*2;
     }
+    canvas.width = width;
+    canvas.height = height;
+    if (width <= 600) {
+        MAX_GEN = 10;
+    }
+
+    ctx = canvas.getContext("2d", {alpha: false});
     ctx.fillStyle = "rgb(127,127,127)"
     ctx.fillRect(0, 0, width, height);
     window.requestAnimationFrame(draw)
