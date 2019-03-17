@@ -89,6 +89,35 @@ a:hover {
     color: #ddd;
 }
 
+aside {
+    font-family: 'Arial', sans-serif;
+    font-size: 0.9rem;
+    color: #e0e0e0;
+    animation: fade-in 2.5s 4.25s linear;
+    animation-fill-mode: forwards;
+    will-change: opacity;
+    opacity: 0;
+    position: absolute;
+    bottom: 0.5rem;
+    right: 1rem;
+}
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+aside a {
+    font-weight: bold;
+}
+aside a:hover {
+    color: white;
+    font-weight: bold;
+}
+
 @media only screen and (min-width: 600px) {
     .canvas-container {
         position: fixed;
