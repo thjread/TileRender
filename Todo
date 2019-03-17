@@ -1,7 +1,5 @@
 Decide on font caching strategy
-Improve performance (maybe wasm)
 Do something nicer on mobile
 Check js compatability
-Change error page colors
 Noscript
 Don't compress woff2, but gzip everything else ahead of time
