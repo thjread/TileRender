@@ -1,4 +1,4 @@
-wasm-pack build
+sh build-wasm.sh
 cd www
 npm install
 npm run build

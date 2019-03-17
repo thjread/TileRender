@@ -10,7 +10,7 @@ let patches = [[0, 0, 128, 128, 1],
                [128, 0, 128, 128, 1]];
 let patchIndex = 0;
 
-const MAX_GEN = 10;
+const MAX_GEN = 11;
 
 function colFromGen(gen, hit) {
     const col_delta = Math.pow(0.5, gen/5+0.8);
