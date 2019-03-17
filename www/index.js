@@ -31,8 +31,6 @@ function drawPatch(x, y, w, h, gen) {
     const minDist = res.get_dist();
     const col_delta = Math.pow(0.5, gen/4+0.75);
     ctx.fillStyle = colFromGen(gen, hit);
-    ctx.strokeStyle = "rgb(128,128,128)"
-    ctx.lineWidth = 0.5;
     ctx.beginPath();
     ctx.rect(x*scale, y*scale, w*scale, h*scale);
     ctx.fill();
@@ -101,6 +99,8 @@ function init() {
 
     ctx = canvas.getContext("2d", {alpha: false});
     ctx.scale(dpr, dpr);
+    ctx.strokeStyle = "rgb(128,128,128)"
+    ctx.lineWidth = 0.5;
     ctx.fillStyle = "rgb(127,127,127)"
     ctx.fillRect(0, 0, width, height);
     window.requestAnimationFrame(draw)
