@@ -10,7 +10,6 @@ module.exports = {
         app: "./bootstrap.js",
         css: "./index.css"
     },
-    devtool: "source-map",
     module: {
         rules: [
             {
