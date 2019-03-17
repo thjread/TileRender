@@ -1,6 +1,2 @@
-Decide on font caching strategy
 Do something nicer on mobile
-Check js compatability
 Noscript
-Don't compress woff2, but gzip everything else ahead of time
-wasm mime-type
