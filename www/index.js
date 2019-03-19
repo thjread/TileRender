@@ -51,21 +51,23 @@ function drawNextPatch() {
         }
         drawPatch(patch[0], patch[1], patch[2], patch[3], patch[4]);
         patchIndex++;
-        return 500/(Math.sqrt(patch[4])*Math.pow(2.25, patch[4]));
+        return 400/(Math.sqrt(patch[4])*Math.pow(2.2, patch[4]));
     } else {
         return 0;
     }
 }
 
 let lastTime;
+let budget = 0;
 
 function draw(time) {
     if (!lastTime) {
         lastTime = time;
     }
-    let budget = time-lastTime;
+    budget += Math.min(time-lastTime, 100)
+    let start = performance.now();
     let its = 0;
-    while (budget > 0 && its < 100) {
+    while (budget > 0 && !(start && performance.now() > start + 10) && its < 500) {
         const result = drawNextPatch();
         if (result === 0) {
             return;
@@ -74,6 +76,7 @@ function draw(time) {
         }
         its++;
     }
+    console.log(its)
     if (budget > -20) {
         window.requestAnimationFrame(draw);
     } else {
