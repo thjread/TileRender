@@ -67,7 +67,7 @@ function draw(time) {
     budget += Math.min(time-lastTime, 100)
     let start = performance.now();
     let its = 0;
-    while (budget > 0 && !(start && performance.now() > start + 10) && its < 500) {
+    while (budget > 0 && !(its % 10 === 0 && start && performance.now() > start + 10) && its < 500) {
         const result = drawNextPatch();
         if (result === 0) {
             return;
@@ -76,8 +76,7 @@ function draw(time) {
         }
         its++;
     }
-    console.log(its)
-    if (budget > -20) {
+    if (budget > -40) {
         window.requestAnimationFrame(draw);
     } else {
         window.setTimeout(function() {
