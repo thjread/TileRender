@@ -200,8 +200,3 @@ pub fn in_text(p: Vec2d) -> InTextResult {
         }
     })
 }
-
-#[wasm_bindgen]
-pub fn greet() {
-    alert("Hello, wasm-thjread!");
-}
