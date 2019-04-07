@@ -89,7 +89,7 @@ a:hover {
     color: #ddd;
 }
 
-aside {
+footer {
     font-family: 'Arial', sans-serif;
     font-size: 0.9rem;
     color: #e0e0e0;
@@ -99,7 +99,10 @@ aside {
     opacity: 0;
     position: absolute;
     bottom: 0.5rem;
-    right: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
 }
 @keyframes fade-in {
     from {
@@ -110,10 +113,18 @@ aside {
     }
 }
 
-aside a {
+.aside-first {
+    padding-bottom: 0.4rem;
+    padding-left: 1rem;
+}
+.aside-second {
+    padding-left: 1rem;
+}
+
+footer a {
     font-weight: bold;
 }
-aside a:hover {
+footer a:hover {
     color: white;
     font-weight: bold;
 }
@@ -146,4 +157,17 @@ aside a:hover {
         width: initial;
         color: inherit;
     }
+
+    footer {
+        flex-direction: row;
+    }
+
+    .aside-first {
+        padding-bottom: 0;
+        padding-left: 1rem;
+    }
+    .aside-second {
+        padding-right: 1rem;
+    }
+
 }
