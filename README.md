@@ -19,3 +19,5 @@ Requires:
 * [wasm-pack](https://github.com/rustwasm/wasm-pack)
 
 ``sh run-local.sh`` will start an npm development server on ``localhost:8080``.
+
+Production NGINX server configuration can be seen at <https://github.com/thjread/thjread>.
