@@ -2,6 +2,8 @@
 
 **A pretty animation that serves as the homepage for <https://thjread.com>.**
 
+![Screenshot of thjread.com](docs/images/thjread.png)
+
 ### How it works
 
 I created a polygonal path (in this case the outline of the word ``thjread``) in Inkscape, and extracted the path coordinates from the resulting SVG file (``data/text.svg``) using a hacky Python script (``data/process_svg.py``). 
@@ -10,7 +12,7 @@ The path is rendered (onto a ``<canvas>`` element) by starting with a coarse gri
 
 ### Running
 
-Requires
+Requires:
 
 * [npm](https://www.npmjs.com/)
 * [Rust](https://www.rust-lang.org/)
