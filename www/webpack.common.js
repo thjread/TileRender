@@ -51,7 +51,7 @@ module.exports = {
     },
     plugins: [
         new CleanWebpackPlugin(),
-        new CopyWebpackPlugin(['404.html', '50x.html', 'favicon.ico', 'robots.txt']),
+        new CopyWebpackPlugin(['404.html', '50x.html', 'favicon.ico', 'robots.txt', 'sitemap.xml']),
         new HtmlWebpackPlugin({
             template: "index.html",
         }),
