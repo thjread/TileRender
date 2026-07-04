@@ -1,5 +1,5 @@
-use Line;
-use Vec2d;
+use crate::Line;
+use crate::Vec2d;
 pub static TEXT_RAW: &[Line] = &[
 Line{from: Vec2d{ x: 35.479099, y: 81.653953}, to: Vec2d{ x: 33.09284, y: 77.532234 }},
 Line{from: Vec2d{ x: 33.09284, y: 77.532234}, to: Vec2d{ x: 29.739424, y: 78.842868125 }},

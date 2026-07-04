@@ -2,38 +2,22 @@
   "name": "tilerender",
   "version": "0.1.0",
   "description": "Homepage of thjread.com, featuring a nice animation created with WebAssembly",
-  "main": "index.js",
-  "bin": {
-    "create-wasm-app": ".bin/create-wasm-app.js"
-  },
+  "type": "module",
+  "private": true,
   "scripts": {
-    "build": "webpack -p --config webpack.prod.js",
-    "start": "webpack-dev-server --config webpack.dev.js"
+    "dev": "vite",
+    "start": "vite --open",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "keywords": [
     "webassembly",
     "wasm",
     "rust",
-    "webpack"
+    "vite"
   ],
   "devDependencies": {
-    "@babel/core": "^7.12.3",
-    "@babel/plugin-syntax-dynamic-import": "^7.8.3",
-    "@babel/preset-env": "^7.12.1",
-    "babel-loader": "^8.1.0",
-    "clean-webpack-plugin": "^3.0",
-    "copy-webpack-plugin": "^5.1.2",
-    "css-loader": "^3.6.0",
-    "file-loader": "^5.1.0",
-    "html-webpack-plugin": "^3.2.0",
-    "mini-css-extract-plugin": "^0.9.0",
-    "optimize-css-assets-webpack-plugin": "^5.0.4",
-    "preload-webpack-plugin": "^3.0.0-beta.4",
-    "terser-webpack-plugin": "^2.3.8",
-    "webpack": "^4.44.2",
-    "webpack-cli": "^3.3.12",
-    "webpack-dev-server": "^3.11.0",
-    "webpack-merge": "^4.2.2"
+    "vite": "^7.0.0"
   },
   "dependencies": {
     "wasm-thjread": "file:../pkg"

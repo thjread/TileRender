@@ -1,4 +1,4 @@
-import {in_text, Vec2d} from "wasm-thjread";
+import init, { in_text, Vec2d } from "wasm-thjread";
 
 let fineness = 1;
 let canvas;
@@ -86,7 +86,7 @@ function draw(time) {
     lastTime = time;
 }
 
-function init() {
+function initCanvas() {
     canvas = document.getElementById("thjread-canvas");
     width = window.innerWidth;
     height = window.innerHeight;
@@ -108,8 +108,10 @@ function init() {
     window.requestAnimationFrame(draw)
 }
 
-if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", init);
-} else {
-    init();
-}
+init().then(() => {
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initCanvas);
+    } else {
+        initCanvas();
+    }
+}).catch((e) => console.error("Error initialising wasm:", e));
